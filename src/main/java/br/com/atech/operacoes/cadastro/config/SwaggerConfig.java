@@ -16,7 +16,7 @@ public class SwaggerConfig {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.useDefaultResponseMessages(false)
 				.select()
-				.apis(RequestHandlerSelectors.basePackage("br.com.jeff.operacoes.cadastro.controller"))
+				.apis(RequestHandlerSelectors.basePackage("br.com.atech.operacoes.cadastro.controller"))
 				.paths(PathSelectors.any())
 				.build();
 	}
