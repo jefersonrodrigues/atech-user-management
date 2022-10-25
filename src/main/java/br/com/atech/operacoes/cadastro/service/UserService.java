@@ -28,7 +28,7 @@ public class UserService {
 	private UserConverter converter;
 
 	public UserResponseDTO findById(Long id) {
-		return repository.findById(id).stream().map(converter::toUserResponseDTO).findFirst().get();
+		return repository.findById(id).map(converter::toUserResponseDTO).orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 
 	public UserDTO insert(final UserInfoDTO user) {
@@ -36,7 +36,7 @@ public class UserService {
 			User saved = repository.save(converter.toUserEntity(user));
 			return converter.toUserDTO(saved);
 		} else {
-			throw new DatabaseException("ERRO AO CRIAR USUÁRIO");
+			throw new DatabaseException("ERRO AO SALVAR USUÁRIO");
 		}
 	}
 
@@ -53,6 +53,7 @@ public class UserService {
 
 	public void remove(Long id) {
 		try {
+			repository.findById(id);
 			repository.deleteById(id);
 		} catch (NoSuchElementException e) {
 			logger.info("Não foi possível encontrar o usuário de id = {}", id);
