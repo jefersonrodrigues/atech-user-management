@@ -1,7 +1,7 @@
 
 # Api para cadastros de usuários ATECH
 
-Foi desenvolvida uma API Rest para cadastro, edição, visualização e deleção de usuário de uma base de dados.
+Foi desenvolvida uma API Rest para cadastro, edição, visualização e deleção de usuários de uma base de dados.
 
 Foram utilizadas as seguintes tecnologias:
 
