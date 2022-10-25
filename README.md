@@ -5,7 +5,7 @@ Foi desenvolvida uma API Rest simples para cadastro, edição, visualização e 
 
 Foram utilizadas as seguintes tecnologias:
 
-Java, Spring Boot, Liquibase, H2 database, JPA/Hibernate e o Swagger.
+Java, Spring Boot, Liquibase, H2 database, JPA/Hibernate, JUnit, Mockito e o Swagger.
 
 
 
