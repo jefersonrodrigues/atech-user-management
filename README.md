@@ -16,4 +16,6 @@ Foram utilizadas as seguintes tecnologias:
 
 Para manter a simplicidade do projeto foi desenvolvido num ambiente para testes (test) e a base de dados foi implementada via Spring Data H2.
 
+Para facilitar os testes da aplicação pode-se importar a collection em JSON do Postman através do arquivo "ATECH.postman_collection" e executar.
+
 ![image](https://user-images.githubusercontent.com/33886884/197853051-40a2e207-37e7-417c-8c2e-996581b8f663.png)
