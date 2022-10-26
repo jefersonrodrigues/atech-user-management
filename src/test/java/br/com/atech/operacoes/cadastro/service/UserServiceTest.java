@@ -23,9 +23,7 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
 import br.com.atech.operacoes.cadastro.converter.UserConverter;
-import br.com.atech.operacoes.cadastro.dto.UserDTO;
 import br.com.atech.operacoes.cadastro.dto.UserInfoDTO;
-import br.com.atech.operacoes.cadastro.dto.UserResponseDTO;
 import br.com.atech.operacoes.cadastro.entity.User;
 import br.com.atech.operacoes.cadastro.exception.ResourceNotFoundException;
 import br.com.atech.operacoes.cadastro.repository.UserRepository;
