@@ -1,7 +1,9 @@
 package br.com.atech.operacoes.cadastro.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
@@ -21,6 +23,9 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
 import br.com.atech.operacoes.cadastro.converter.UserConverter;
+import br.com.atech.operacoes.cadastro.dto.UserDTO;
+import br.com.atech.operacoes.cadastro.dto.UserInfoDTO;
+import br.com.atech.operacoes.cadastro.dto.UserResponseDTO;
 import br.com.atech.operacoes.cadastro.entity.User;
 import br.com.atech.operacoes.cadastro.exception.ResourceNotFoundException;
 import br.com.atech.operacoes.cadastro.repository.UserRepository;
@@ -45,15 +50,14 @@ public class UserServiceTest {
 	UserConverter converter;
 
 	private User user;
-//	private UserInfoDTO info;
-//	private UserResponseDTO response;
+	private UserInfoDTO info;
 
 	@BeforeEach
 	void setUp() {
 		MockitoAnnotations.openMocks(this);
 		startUser();
 	}
-	
+
 	@Test
 	void canRemoveUser() {
 		when(repository.findById(anyLong())).thenReturn(Optional.of(user));
@@ -68,7 +72,7 @@ public class UserServiceTest {
 			throw new ResourceNotFoundException(ID);
 		});
 
-		when(repository.findById(ID)).thenThrow(exception);
+		when(repository.findById(anyLong())).thenThrow(exception);
 
 		try {
 			service.remove(ID);
@@ -78,9 +82,41 @@ public class UserServiceTest {
 		}
 	}
 
+	@Test
+	void canUpdateUser() {
+		when(repository.findById(anyLong())).thenReturn(Optional.of(user));
+		when(repository.save(any())).thenReturn(user).thenReturn(converter.toUserDTO(user));
+	}
+	
+	@Test
+	void cannotUpdateUser() {
+		ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> {
+			throw new ResourceNotFoundException(ID);
+		});
+		when(repository.findById(anyLong())).thenThrow(exception);
+		try {
+			Optional.of(user).get();
+			service.update(info, -1L);
+		} catch (Exception e) {
+			assertEquals(ResourceNotFoundException.class, e.getClass());
+		}
+	}
+	
+	@Test
+	void canInsertUser() {
+		when(repository.save(user)).thenReturn(user);
+		service.insert(info);
+		
+		assertNotNull(info);
+		assertEquals(NAME, info.getName());
+		assertEquals(EMAIL, info.getEmail());
+		assertEquals(USERNAME, info.getUsername());
+		assertEquals(PASSWORD, info.getPassword());
+		verify(repository, times(1)).save(any());
+	}
+	
 	private void startUser() {
 		user = new User(ID, NAME, USERNAME, EMAIL, PASSWORD, false);
-//		info = new UserInfoDTO(NAME, USERNAME, EMAIL, PASSWORD);
-//		response = new UserResponseDTO(NAME, USERNAME, EMAIL);
+		info = new UserInfoDTO(NAME, USERNAME, EMAIL, PASSWORD);
 	}
 }
