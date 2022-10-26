@@ -28,11 +28,11 @@ public class UserService {
 	private UserConverter converter;
 
 	public UserResponseDTO findById(Long id) {
-		UserResponseDTO response = repository.findById(id)
+		return repository.findById(id)
 				.map(converter::toUserResponseDTO)
 				.orElseThrow(
 						() -> new ResourceNotFoundException(id));
-		return response;
+
 	}
 
 	public UserDTO insert(final UserInfoDTO user) {
